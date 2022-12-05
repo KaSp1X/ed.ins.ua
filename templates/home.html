@@ -1,17 +1,29 @@
 {% extends "base.html"%}
 {% block content %}
-    <div class="home">
-        <table>
-        {% for institute in institutes%}
+<div id="content">
+    <table>
+        <tr>
+            <th>Назва інституту</td>
+            <th id="info">Коротка інформація</td>
+            <th id="info">Повна інформація</td>
+        </tr>
+        {% for institute in institutes %}
         <tr>
             <td>
-                <a href="{{ url_for('FullInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
-                {{ institute.name }}
+                <p>{{ institute.name }}</p>
+            </td>
+            <td id="info">
+                <a href="{{ url_for('ShortInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
+                    <img src="{{ url_for('static', filename='img/information-sign.png') }}" alt="Short Info" >
                 </a>
             </td>
-            <td>{{institute.city}}</td>
+            <td id="info">
+                <a href="{{ url_for('FullInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
+                    <img src="{{ url_for('static', filename='img/information-sign.png') }}" alt="Full Info" >
+                </a>
+            </td>
         </tr>
         {% endfor %}
-        </table>
-    </div>
+    </table>
+</div>
 {% endblock %}
