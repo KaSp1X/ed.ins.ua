@@ -1,25 +1,6 @@
-from SPARQLWrapper import SPARQLWrapper, JSON
-
-sparql = SPARQLWrapper('https://dbpedia.org/sparql')
-
+from query import Query
 class Institute:
-    def __init__(self, URI):
+    def __init__(self, URI, name = None, city = None):
         self.URI = URI
-        self.graph = self.getGraphAsSubject()
-
-    def getGraphAsSubject(self):
-        query = f'''
-        SELECT ?predicate ?object
-        WHERE {{ {self.URI} ?predicate ?object. }}'''
-        sparql.setQuery(query)
-        sparql.setReturnFormat(JSON)
-        try:           
-            return sparql.query().convert()
-        except:
-            print("Error has occured when tried to get query")
-            pass
-
-    def getRelations(self):
-        if self.graph is None:  
-            return ""
-        return self.graph['results']['bindings']
+        self.name = name
+        self.city = city

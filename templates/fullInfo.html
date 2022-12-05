@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+{% block content %}
+    <div class="fullInfo">
+        <table>
+        {% for item in instituteInfo%}
+            <tr>
+                <td>
+                    <a href={{item['predicate']['value']}}>
+                        {{item['predicate']['value']}}
+                    </a>
+                </td>
+                <td>
+                    {% for o in item['object']%}
+                    <p>{{o['value']}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock %}
