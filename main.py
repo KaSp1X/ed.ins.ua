@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from model import MainPageModel
+from model import MainPageModel, FullInfoPageModel
 from institute import Institute
 
 app = Flask(__name__)
@@ -15,8 +15,11 @@ def Home():
 
 @app.route("/<string:instituteURI>/fullInfo")
 def FullInfo(instituteURI):
-    institute = Institute(instituteURI)
-    return render_template('fullInfo.html', institute=institute)
+    fipModel = FullInfoPageModel()
+    instituteInfo = fipModel.getFullInfo(instituteURI)
+    title = fipModel.getName(instituteInfo)
+    dbpediaURL = instituteURI.replace('dbr:','http://dbpedia.org/resource/')
+    return render_template('fullInfo.html', instituteInfo=instituteInfo, title=title, dbpediaURL=dbpediaURL)
 
 
 @app.route("/<string:instituteURI>/shortInfo")
