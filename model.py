@@ -1,10 +1,7 @@
 from query import Query
 
 class MainPageModel:
-    def __init__(self) -> None:
-        pass
-
-    def get_institutes(self):
+    def getInstitutes(self):
         query = Query(f''' 
             SELECT ?institute (SAMPLE(?instName) AS ?instituteName) (SAMPLE(?cName) AS ?cityName)
             WHERE
@@ -23,4 +20,4 @@ class MainPageModel:
             }}
             GROUP BY ?institute
         ''')
-        return query.execute()
+        return query.execute()['results']['bindings']

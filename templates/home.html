@@ -4,8 +4,11 @@
         <table>
         {% for institute in institutes%}
         <tr>
-            <td>{{ institute.URI.replace("http://dbpedia.org/resource/","dbr:") }}</td>
-            <td><a href={{institute.URI}}>{{ institute.name }}</a></td>
+            <td>
+                <a href="{{ url_for('FullInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
+                {{ institute.name }}
+                </a>
+            </td>
             <td>{{institute.city}}</td>
         </tr>
         {% endfor %}

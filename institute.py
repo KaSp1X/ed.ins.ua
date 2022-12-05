@@ -1,13 +1,10 @@
 from query import Query
 class Institute:
-    def __init__(self, URI):
-        self.URI = URI
-        self.graph = self.getGraphAsSubject()
-
-    def __init__(self, URI, name, city):
+    def __init__(self, URI, name = None, city = None):
         self.URI = URI
         self.name = name
         self.city = city
+        self.graph = None
 
     def getGraphAsSubject(self):
         query = Query(f'''
