@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from model import MainPageModel, FullInfoPageModel
+from model import MainPageModel, InfoPageModel
 from institute import Institute
 
 app = Flask(__name__)
@@ -15,17 +15,20 @@ def Home():
 
 @app.route("/<string:instituteURI>/fullInfo")
 def FullInfo(instituteURI):
-    fipModel = FullInfoPageModel()
-    instituteInfo = fipModel.getFullInfo(instituteURI)
-    title = fipModel.getName(instituteInfo)
+    ipModel = InfoPageModel()
+    instituteInfo = ipModel.getFullInfo(instituteURI)
+    title = ipModel.getValue(instituteInfo, "http://www.w3.org/2000/01/rdf-schema#label", ukLang=True)
     dbpediaURL = instituteURI.replace('dbr:','http://dbpedia.org/resource/')
     return render_template('fullInfo.html', instituteInfo=instituteInfo, title=title, dbpediaURL=dbpediaURL)
 
 
 @app.route("/<string:instituteURI>/shortInfo")
 def ShortInfo(instituteURI):
-    institute = Institute(instituteURI)
-    return render_template('shortInfo.html', institute=institute)
+    ipModel = InfoPageModel()
+    instituteInfo = ipModel.getFullInfo(instituteURI)
+    title = ipModel.getValue(instituteInfo, "http://www.w3.org/2000/01/rdf-schema#label", ukLang=True)
+    dbpediaURL = instituteURI.replace('dbr:','http://dbpedia.org/resource/')
+    return render_template('shortInfo.html', instituteInfo=instituteInfo, title=title, dbpediaURL=dbpediaURL)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
