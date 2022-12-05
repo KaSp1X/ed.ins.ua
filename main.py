@@ -13,10 +13,16 @@ def Home():
     # print(len(institutes))
     return render_template('home.html', institutes=institutes)
 
-@app.route("/<string:instituteURI>")
+@app.route("/<string:instituteURI>/fullInfo")
 def FullInfo(instituteURI):
     institute = Institute(instituteURI)
     return render_template('fullInfo.html', institute=institute)
 
+
+@app.route("/<string:instituteURI>/shortInfo")
+def ShortInfo(instituteURI):
+    institute = Institute(instituteURI)
+    return render_template('shortInfo.html', institute=institute)
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=8080)

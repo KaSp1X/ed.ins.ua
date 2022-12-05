@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
     <title>ed.ins.ua</title>
 </head>
+
 <body>
-    <div>ed.ins.ua: <a href="./">Home page</a> </div>
-    <hr>
+    <div id="header">
+        <h2><a href="{{url_for('Home')}}">
+            ed.ins.ua
+        </a></h2>
+        {% block title %}{% endblock %}
+    </div>
     {% block content %}{% endblock %}
 </body>
+
 </html>
