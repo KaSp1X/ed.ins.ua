@@ -18,7 +18,8 @@ def FullInfo(instituteURI):
     fipModel = FullInfoPageModel()
     instituteInfo = fipModel.getFullInfo(instituteURI)
     title = fipModel.getName(instituteInfo)
-    return render_template('fullInfo.html', instituteInfo=instituteInfo, title=title)
+    dbpediaURL = instituteURI.replace('dbr:','http://dbpedia.org/resource/')
+    return render_template('fullInfo.html', instituteInfo=instituteInfo, title=title, dbpediaURL=dbpediaURL)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
