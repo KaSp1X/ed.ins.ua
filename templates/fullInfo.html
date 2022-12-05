@@ -5,6 +5,10 @@
 {% block content %}
     <div id="content">
         <table>
+            <tr>
+                <th>Предикат</th>
+                <th>Об'єкт</th>
+            </tr>
         {% for item in instituteInfo%}
             <tr>
                 <td>
@@ -14,7 +18,11 @@
                 </td>
                 <td>
                     {% for o in item['object']%}
+                    {% if o['type'] == 'uri'%}
+                    <a href="{{o['value']}}">{{o['value']}}</a> <br>
+                    {% else %}
                     <p>{{o['value']}}</p>
+                    {% endif %}
                     {% endfor %}
                 </td>
             </tr>
