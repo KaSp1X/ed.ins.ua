@@ -1,6 +1,9 @@
 {% extends "base.html"%}
+{% block title %}
+    <p>{{title}}</p>
+{% endblock %}
 {% block content %}
-    <div class="fullInfo">
+    <div id="content">
         <table>
         {% for item in instituteInfo%}
             <tr>

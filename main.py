@@ -17,7 +17,8 @@ def Home():
 def FullInfo(instituteURI):
     fipModel = FullInfoPageModel()
     instituteInfo = fipModel.getFullInfo(instituteURI)
-    return render_template('fullInfo.html', instituteInfo=instituteInfo)
+    title = fipModel.getName(instituteInfo)
+    return render_template('fullInfo.html', instituteInfo=instituteInfo, title=title)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
