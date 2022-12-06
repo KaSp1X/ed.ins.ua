@@ -1,32 +1,32 @@
 {% extends "base.html"%}
 {% block title %}
-    <a href="{{dbpediaURL}}">{{title}}</a>
+<a href="{{dbpediaURL}}">{{title}}</a>
 {% endblock %}
 {% block content %}
-    <div id="content">
-        <table>
-            <tr>
-                <th>Предикат</th>
-                <th>Об'єкт</th>
-            </tr>
+<div id="content">
+    <table id="styled-table">
+        <tr>
+            <th style="width: 20%;">Предикат</th>
+            <th>Об'єкт</th>
+        </tr>
         {% for item in instituteInfo%}
-            <tr>
-                <td>
-                    <a href={{item['predicate']['value']}}>
-                        {{item['predicate']['value']}}
-                    </a>
-                </td>
-                <td>
-                    {% for o in item['object']%}
-                    {% if o['type'] == 'uri'%}
-                    <a href="{{o['value']}}">{{o['value']}}</a> <br>
-                    {% else %}
-                    <p>{{o['value']}}</p>
-                    {% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a href={{item['predicate']['value']}}>
+                    {{item['predicate']['value']}}
+                </a>
+            </td>
+            <td>
+                {% for o in item['object']%}
+                {% if o['type'] == 'uri'%}
+                <a href="{{o['value']}}">{{o['value']}}</a> <br>
+                {% else %}
+                <p>{{o['value']}}</p>
+                {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
         {% endfor %}
-        </table>
-    </div>
+    </table>
+</div>
 {% endblock %}
