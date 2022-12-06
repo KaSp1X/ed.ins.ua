@@ -1,0 +1,60 @@
+{% extends "base.html"%}
+{% block title %}
+<a href="{{dbpediaURL}}">{{instituteInfo['name']}}</a>
+{% endblock %}
+{% block content %}
+<div id="content-grid">
+    <div>
+        <table>
+            {% if instituteInfo['name'] != ''%}
+            <tr>
+                <td><b>Назва</b></td>
+                <td>{{instituteInfo['name']}}</td>
+            </tr>
+            {%endif%}
+            {% if instituteInfo['abstract'] != ''%}
+            <tr>
+                <td><b>Опис</b></td>
+                <td>{{instituteInfo['abstract']}}</td>
+            </tr>
+            {%endif%}
+            {% if instituteInfo['city'] != ''%}
+            <tr>
+                <td><b>Місто</b></td>
+                <td>{{instituteInfo['city']}}</td>
+            </tr>
+            {%endif%}
+            {% if instituteInfo['country'] != ''%}
+            <tr>
+                <td><b>Країна</b></td>
+                <td>{{instituteInfo['country']}}</td>
+            </tr>
+            {%endif%}
+            {% if instituteInfo['motto'] != ''%}
+            <tr>
+                <td><b>Девіз</b></td>
+                <td>{{instituteInfo['motto']}}</td>
+            </tr>
+            {%endif%}
+            {% if instituteInfo['rector'] != ''%}
+            <tr>
+                <td><b>Ректор</b></td>
+                <td>{{instituteInfo['rector']}}</td>
+            </tr>
+            {%endif%}
+            {% if instituteInfo['website'] != ''%}
+            <tr>
+                <td><b>Офіційний сайт</b></td>
+                <td><a href="{{instituteInfo['website']}}">{{instituteInfo['website']}}</a></td>
+            </tr>
+            {%endif%}
+        </table>
+    </div>
+    <div id="instituteImg">
+        <a href="{{instituteInfo['image']}}">
+            <img src="{{instituteInfo['image']}}"
+            onerror="this.onerror=null;this.src='{{url_for('static', filename='img/no-image.png')}}';">
+        </a>
+    </div>
+</div>
+{% endblock %}
