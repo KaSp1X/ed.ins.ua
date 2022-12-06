@@ -23,7 +23,7 @@ class MainPageModel:
         result = query.execute()['results']['bindings']
         return result
 
-class FullInfoPageModel:
+class InfoPageModel:
     def groupByPredicate(self, JSONobject):
         new_data = []
         not_found = True
@@ -38,20 +38,27 @@ class FullInfoPageModel:
                 new_data.append({'predicate':item['predicate'], 'object':[item['object']]})
         return new_data
 
-    def getName(self, JSONObject):
-        name = ""
-        not_found = True
+    def getValue(self, JSONObject, predicate, type = None, ukLang = False):
+        value = ""
         for item in JSONObject:
-            if item['predicate']['value'] == "http://www.w3.org/2000/01/rdf-schema#label":
+            if item['predicate']['value'] == predicate:
                 for object in item['object']:
-                    if (object['type'] == 'literal' and object['xml:lang'] == "uk"):
-                        not_found = False
-                        name = object["value"]
-                        break
-            if not_found == False:
+                    if (type is not None and object['type'] == type) or (type is None):
+                        if (ukLang == True and object.get('xml:lang') == "uk") or (ukLang == False):
+                            value = object["value"]
+                            break
                 break
-        print(name)
-        return name
+        # print(value)
+        return value
+
+    def shortenURI(self, URI):
+        revURI = URI[::-1]
+        try:
+            revIndex = revURI.index("/")
+        except:
+            revIndex = 0
+        index = len(URI) - revIndex
+        return URI[index:]
 
     def getFullInfo(self, URI):
         query = Query(f'''
