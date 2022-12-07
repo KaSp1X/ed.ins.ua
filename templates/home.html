@@ -1,10 +1,15 @@
 {% extends "base.html"%}
+{% block head %}
+{% endblock %}
 {% block content %}
 <div id="content-grid" style="grid-template-columns: 25% auto;">
     <div>
+        <form method="POST" action="{{url_for('Home')}}">
         <table id="filter">
             <tr>
-                <th colspan="2"><h3>Фільтр</h3></th>
+                <th colspan="2">
+                    <h3>Фільтр</h3>
+                </th>
             </tr>
             <tr>
                 <td>Країна</td>
@@ -17,19 +22,26 @@
             <tr>
                 <td>Місто</td>
                 <td>
-                    <select>
-                        <option value="Ukraine"></option>
+                    <select type="text" name="city" onchange="this.form.submit()">
+                        {% for city in cities %}
+                        {% if city == selectedCity %}
+                        <option value="{{city}}" selected>{{city}}</option>
+                        {% else %}
+                        <option value="{{city}}">{{city}}</option>
+                        {% endif %}
+                        {% endfor %}
                     </select>
                 </td>
             </tr>
         </table>
+    </form>
     </div>
     <div>
         <table id="styled-table">
             <tr>
                 <th>Назва інституту</td>
-                <th style="text-align: center;">Коротка інформація</td>
-                <th style="text-align: center;">Повна інформація</td>
+                <th style="text-align: center; width: 15%;">Коротка інформація</td>
+                <th style="text-align: center; width: 15%;">Повна інформація</td>
             </tr>
             {% for institute in institutes %}
             <tr>
