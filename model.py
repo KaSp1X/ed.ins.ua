@@ -22,6 +22,13 @@ class MainPageModel:
         ''')
         result = query.execute()['results']['bindings']
         return result
+    
+    def filterByCity(self, institutes, city):
+        new_institutes = []
+        for institute in institutes:
+            if institute.city == city:
+                new_institutes.append(institute)
+        return new_institutes
 
 class InfoPageModel:
     def groupByPredicate(self, JSONobject):

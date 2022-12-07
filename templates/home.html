@@ -1,29 +1,68 @@
 {% extends "base.html"%}
+{% block head %}
+{% endblock %}
 {% block content %}
-<div id="content">
-    <table>
-        <tr>
-            <th>Назва інституту</td>
-            <th>Коротка інформація</td>
-            <th>Повна інформація</td>
-        </tr>
-        {% for institute in institutes %}
-        <tr>
-            <td>
-                <p>{{ institute.name }}</p>
-            </td>
-            <td id="info">
-                <a href="{{ url_for('ShortInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
-                    <img src="{{ url_for('static', filename='img/information-sign.png') }}" alt="Short Info" >
-                </a>
-            </td>
-            <td id="info">
-                <a href="{{ url_for('FullInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
-                    <img src="{{ url_for('static', filename='img/information-sign.png') }}" alt="Full Info" >
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+<div id="content-grid" style="grid-template-columns: 25% auto;">
+    <div>
+        <form method="POST" action="{{url_for('Home')}}">
+        <table id="filter">
+            <tr>
+                <th colspan="2">
+                    <h3>Фільтр</h3>
+                </th>
+            </tr>
+            <tr>
+                <td>Країна</td>
+                <td>
+                    <select title="Країна" disabled>
+                        <option value="Ukraine" selected>Україна</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Місто</td>
+                <td>
+                    <select type="text" name="city" onchange="this.form.submit()">
+                        {% for city in cities %}
+                        {% if city == selectedCity %}
+                        <option value="{{city}}" selected>{{city}}</option>
+                        {% else %}
+                        <option value="{{city}}">{{city}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </div>
+    <div>
+        <table id="styled-table">
+            <tr>
+                <th>Назва інституту</td>
+                <th style="text-align: center; width: 15%;">Коротка інформація</td>
+                <th style="text-align: center; width: 15%;">Повна інформація</td>
+            </tr>
+            {% for institute in institutes %}
+            <tr>
+                <td>
+                    <p>{{ institute.name }}</p>
+                </td>
+                <td id="info">
+                    <a
+                        href="{{ url_for('ShortInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
+                        <img src="{{ url_for('static', filename='img/information-sign.png') }}" alt="Short Info">
+                    </a>
+                </td>
+                <td id="info">
+                    <a
+                        href="{{ url_for('FullInfo', instituteURI = institute.URI.replace('http://dbpedia.org/resource/','dbr:')) }}">
+                        <img src="{{ url_for('static', filename='img/information-sign.png') }}" alt="Full Info">
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 {% endblock %}

@@ -1,17 +1,29 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from model import MainPageModel, InfoPageModel
 from institute import Institute
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET','POST'])
 def Home():
     mpModel = MainPageModel()
     institutes = [Institute(item['institute']['value'], 
                             item['instituteName']['value'], 
                             item['cityName']['value']) for item in mpModel.getInstitutes()]
+    cities = sorted(set(institute.city for institute in institutes))
+
+    if request.method == "POST":
+        form = request.form
+        city = form.get("city")
+    else:
+        city = cities[0]
+
+    # print(city)
+    
+    filteredInstitutes = mpModel.filterByCity(institutes, city)
+
     # print(len(institutes))
-    return render_template('home.html', institutes=institutes)
+    return render_template('home.html', institutes=filteredInstitutes, cities = cities, selectedCity = city)
 
 @app.route("/<string:instituteURI>/fullInfo")
 def FullInfo(instituteURI):
